@@ -1,6 +1,7 @@
 import json
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
 import calculate_similarity as calculate
 import os
 
@@ -24,13 +25,10 @@ def upload(request):
         if result == 1:
             ret['status'] = True
             ret['data'] = file_path
-            HttpResponse(json.dumps(ret))
         else:
             ret['status'] = False
-            ret['error'] = "Failed to detect the human face. Please pick another photo."
-            HttpResponse(json.dumps(ret))
+            ret['error'] = "Failed to detect the human face."
 
-        return render(request, 'match.html', {'file_path': file_path})
-        # return render(request, 'match.html/pic='+picture.name)
+        return HttpResponse(json.dumps(ret))
     else:
         return redirect("/home/")
