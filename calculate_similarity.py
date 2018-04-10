@@ -1,7 +1,6 @@
 # coding:utf-8
 import cv2
 import matplotlib.pyplot as plt
-# import cut_cat as cat
 import cut_human as human
 
 x = range(30)
@@ -44,33 +43,38 @@ def get_avg(diff1, diff11):
 # parameter specification
 #   human_path:         path to the human's photo which is newly uploaded
 #   cut_human_path:     path where saves the human photo cut
+# return specification
+#   return 1: success
+#   return 0: fail to calculate the similarity
 def calculate_similarity(human_path, cut_human_path):
-    # cat.cut_cat(cat_path)
-    human.cut_human(human_path, cut_human_path, faceCascade_human)
+    result = human.cut_human(human_path, cut_human_path, faceCascade_human)
+    if result == 0:
+        return 0
+    else:
+        img_cat = cv2.imread(cut_cat_path)
+        img_human = cv2.imread(cut_human_path)
 
-    img_cat = cv2.imread(cut_cat_path)
-    img_human = cv2.imread(cut_human_path)
+        # 读取测试图片 for human
+        diff_human = get_diff(img_human)
+        print('img_human:', get_ss(diff_human))
 
-    # 读取测试图片 for human
-    diff_human = get_diff(img_human)
-    print('img_human:', get_ss(diff_human))
+        # 读取测试图片  for cat
+        diff_cat = get_diff(img_cat)
+        print('img_cat:', get_ss(diff_cat))
 
-    # 读取测试图片  for cat
-    diff_cat = get_diff(img_cat)
-    print('img_cat:', get_ss(diff_cat))
+        result_value = get_avg(diff_human, diff_cat)
+        print('similarity', get_ss(result_value))
 
-    result_value = get_avg(diff_human, diff_cat)
-    print('similarity', get_ss(result_value))
+        plt.figure("avg")
+        plt.plot(x, diff_human, marker="*", label="$walk01$")
+        plt.plot(x, diff_cat, marker="*", label="$walk03$")
+        plt.title("avg")
+        plt.legend()
+        plt.show()
 
-    plt.figure("avg")
-    plt.plot(x, diff_human, marker="*", label="$walk01$")
-    plt.plot(x, diff_cat, marker="*", label="$walk03$")
-    plt.title("avg")
-    plt.legend()
-    plt.show()
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        return 1
 
 
 
