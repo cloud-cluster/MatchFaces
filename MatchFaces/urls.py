@@ -19,6 +19,6 @@ from MatchFaces import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^home/', views.home),
+    url(r'^$', views.home),
     url(r'^upload/', views.upload),
 ]

@@ -9,11 +9,69 @@
     <meta name="keywords" content="" /> 
     <meta name="viewport" content="width=device-width,minimal-ui=yes,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
         html,body {
             width: 100%;
             height: 100%;
-            background-color: #15adbc;
+            /* background-color: #15adbc; */
+            background: #22313f;
             font-size: 12px;
+        }
+        #starsBox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            opacity: .5;
+        }
+        #starsBox span {
+            display: inline-block;
+            width: auto;
+            position: absolute;
+            border-radius: 100%;
+            transition: 100s linear;
+        }
+        p {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            transform: translateY(-50%);
+            font-size: 40px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 50px black;
+            text-transform: uppercase;
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            letter-spacing: 5px;
+        }
+        p > span:not(.comeon_text) {
+            display: block;
+            font-size: 12px;
+            color: #bdc3c7;
+            margin-top: 30px;
+            font-weight: 100;
+            text-shadow: 0 0 50px black;
+            letter-spacing: 3px;
+        }
+        p > span > a {
+            font-weight: 700;
+            text-decoration: none;
+            color: #d64541;
+            padding-bottom: 2px;
+            border-bottom: 0px solid #d64541;
+            transition: 0.5s;
+        }
+        p > span > a:hover {
+            padding-bottom: 5px;
+            border-bottom: 2px solid #d64541;
         }
         img {
             width: 100%;
@@ -26,10 +84,10 @@
             z-index: 5;
             position: relative;
             width: 35rem;
-            height: 25rem;
+            height: 26rem;
             border-radius: 3rem;
             border: 2px solid #726F6F;
-            background-color: #d8d8d8;
+            background-color: #9e9e9e8c;
             margin: 0 auto;
             margin-top: 1rem;
             -webkit-box-sizing: border-box;
@@ -38,155 +96,47 @@
             font-size: 1.6rem;
             overflow: hidden;
         }
+        .comeon_text{
+            color: #fff;
+        }
         .comeon_note_submit{
-            width: 5rem;
-            height: 5rem;
+            width: 10rem;
+            height: 3rem;
             background-color: #726F6F;
             color: #d8d8d8;
             text-align: center;
-            line-height: 5rem;
+            line-height: 3rem;
             position: absolute;
             border-radius: 2.5rem;
             font-size: 2rem;
             border: 0px solid #111;
-            left: 47%;
+            left: 37%;
             bottom: 0.5rem;
-        }
-        .comeon_hat {
-            width: 10rem;
-            height: 10rem;
-            border: 0px solid #979797;
-            margin: 0 auto;
-            position: relative;
-            margin-top: 1rem;
-            z-index: 15;
-            -moz-animation: hat 3s 1 0s forwards;
-            -ms-animation: hat 3s 1 0s forwards;
-            -o-animation: hat 3s 1 0s forwards;
-            -webkit-animation: hat 3s 1 0s forwards;
-            animation: hat 3s 1 0s forwards;
-        }
-        .comeon_hat_roundup {
-            width: 5rem;
-            height: 5rem;
-            border-radius: 2.5rem;
-            background-color: #726F6F;
-            position: absolute;
-            top: -1.5rem;
-            left: 2.5rem;
-            -moz-transform: scaleY(0.5);
-            -ms-transform: scaleY(0.5);
-            -o-transform: scaleY(0.5);
-            -webkit-transform: scaleY(0.5);
-            transform: scaleY(0.5);
-            border: 0px solid #979797;
-            z-index: 10;
-        }
-        .comeon_hat_rect {
-            width: 5rem;
-            height: 6rem;
-            background-color: #696969;
-            border: 0px solid #979797;
-            position: absolute;
-            top: 1.2rem;
-            left: 2.5rem;
-            z-index: 9;
-        }
-        .comeon_hat_rectdown {
-            width: 5rem;
-            height: 0.8rem;
-            background-color: #D8D8D8;
-            border: 0px solid #979797;
-            position: absolute;
-            top: 7.2rem;
-            left: 2.5rem;
-            z-index: 9;
-        }
-        .comeon_hat_rounddown {
-            width: 12rem;
-            height: 12rem;
-            border-radius: 6rem;
-            background-color: #726F6F;
-            position: absolute;
-            top: 2rem;
-            left: -1rem;
-            -moz-transform: scaleY(0.3);
-            -ms-transform: scaleY(0.3);
-            -o-transform: scaleY(0.3);
-            -webkit-transform: scaleY(0.3);
-            transform: scaleY(0.3);
-            border: 0px solid #979797;
-            z-index: 10;
-            box-shadow: inset 0px 1px 3px #fff;
-            z-index: 8;
-        }
-        .comeon_glass {
-            width: 8rem;
-            height: 4rem;
-            border: 0px solid #979797;
-            position: absolute;
-            z-index: 11;
-            left: calc(50% - 4rem);
-        }
-        .comeon_glass .comeon_glass_left {
-            width: 3.5rem;
-            height: 2.5rem;
-            background-color: #000;
-            position: absolute;
-            border-radius: 1rem;
-        }
-        .comeon_glass .comeon_glass_left:before,
-        .comeon_glass .comeon_glass_right:before {
-            content: '';
-            width: 3rem;
-            height: 0.5rem;
-            position: absolute;
-            top: 0.5rem;
-            background-color: #000;
-            -moz-transform: rotate(15deg);
-            -ms-transform: rotate(15deg);
-            -o-transform: rotate(15deg);
-            -webkit-transform: rotate(15deg);
-            transform: rotate(15deg);
-        }
-        .comeon_glass .comeon_glass_left:before {
-            left: -3rem;
-        }
-        .comeon_glass .comeon_glass_right:before {
-            right: -3rem;
-            -moz-transform: rotate(-15deg);
-            -ms-transform: rotate(-15deg);
-            -o-transform: rotate(-15deg);
-            -webkit-transform: rotate(-15deg);
-            transform: rotate(-15deg);
-        }
-        .comeon_glass .comeon_glass_right {
-            width: 3.5rem;
-            height: 2.5rem;
-            background-color: #000;
-            position: absolute;
-            border-radius: 1rem;
-            right: 0;
-        }
-        .comeon_glass .comeon_glass_midrect {
-            width: 3rem;
-            height: 0.5rem;
-            position: absolute;
-            left: 3.5rem;
-            top: 1rem;
-            background-color: #000;
+            cursor: pointer;
         }
         .origin_pic{
-            width: 50%;
+            width: 49%;
             height: 15rem;
             overflow: hidden;
+            display: inline-block;
+        }
+        .comeon_title{
+            color: #fff;
+            font-size: 2rem;
+            margin:0 auto;
+            width: 400px;
+            padding-top: 20px;
+            height:70px;   
+            line-height:50px;   
+            overflow:hidden; 
         }
     </style>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="comeon_hat">
+<div class="container" id="starsBox">
+    <p><span>
+    <!-- <div class="comeon_hat">
         <div class="comeon_hat_roundup"></div>
         <div class="comeon_hat_rect"></div>
         <div class="comeon_hat_rectdown"></div>
@@ -196,18 +146,49 @@
         <div class="comeon_glass_left"></div>
         <div class="comeon_glass_right"></div>
         <div class="comeon_glass_midrect"></div>
-    </div>
+    </div> -->
+    <div class="comeon_title">In a previous incarnation, You...</div>
     <form id="form1">
         <div class="comeon_note">
-            <span>请上传您的照片：</span>
+            <div class="comeon_text">Please upload your photo：</div>
             <input id="file_pic" type="file" accept="image/*" name="picture"/>
             <div class="origin_pic">
-                <img id="blah" src="#" alt="your image" />
+                <img id="blah" src="#" alt="" />
             </div>
-            <input class="comeon_note_submit" id="btn_upload"/>
+            <div class="origin_pic">
+                <img id="blah2" src="#" alt="" />
+            </div>
+            <div class="comeon_note_submit" id="btn_upload">match!</div>
         </div>
     </form>
-</div>
+    <div id="loading">
+        <img src="image/cat.gif" alt="loading">
+    </div>
+</span></p></div>
+<script>
+    var cols = ['#f5d76e', '#f7ca18', '#f4d03f', '#ececec', '#ecf0f1', '#a2ded0'];
+    var stars = 250;
+
+    for (var i = 0; i <= stars; i++) {
+
+        var size = Math.random() * 3;
+        var color = cols[parseInt(Math.random() * 4)];
+
+        $('#starsBox').prepend('<span style=" width: ' + size + 'px; height: ' + size + 'px; top: ' + Math.random() * 100 + '%; left: ' + Math.random() * 100 + '%; background: ' + color + '; box-shadow: 0 0 ' + Math.random() * 10 + 'px' + color + ';"></span>');
+    };
+
+    setTimeout(function() {
+        $('#starsBox span').each(function() {
+            $(this).css('top', Math.random() * 100 + '%').css('left', Math.random() * 100 + '%');
+        });
+    }, 1);
+
+    setInterval(function() {
+        $('#starsBox span').each(function() {
+            $(this).css('top', Math.random() * 100 + '%').css('left', Math.random() * 100 + '%');
+        });
+    }, 100000);
+</script>
 <script>
     $(document).ready(function(){
         $('#btn_upload').click(function() {
@@ -222,10 +203,12 @@
                 processData: false,  // 告诉jQuery不要去处理发送的数据
                 contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
                 success: function (data) {
+                    console.dir('data=',data)
                     if (data.status == 'success') {
-                        alert(data.data)
+                        //alert(data.data)
+                        $('#blah2').attr('src', e.target.result);                        
                     }else if (data.status == 'fail') {
-                        alert("fail")
+                        //alert("fail")
                     }
                 }
             })
