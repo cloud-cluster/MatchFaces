@@ -197,45 +197,44 @@
         <div class="comeon_glass_right"></div>
         <div class="comeon_glass_midrect"></div>
     </div>
-    <form id="form1" method="post" enctype="multipart/form-data" action="/upload/">
+    <form id="form1">
         <div class="comeon_note">
             <span>请上传您的照片：</span>
-            <input id="file_pic" type="file" accept="image/*" name="picture" enctype="multpart/form-data"/>
+            <input id="file_pic" type="file" accept="image/*" name="picture"/>
             <div class="origin_pic">
                 <img id="blah" src="#" alt="your image" />
             </div>
-            <button class="comeon_note_submit" id="btn_upload">ok!</button>
+            <input class="comeon_note_submit" id="btn_upload"/>
         </div>
     </form>
 </div>
 <script>
     $(document).ready(function(){
-        {#$('#btn_upload').click(function(){#}
-        {#    var fd = new FormData();#}
-        {#    var photo = $("#file_pic")[0].files[0];#}
-        {#    fd.append('photo',photo);#}
-        {#    console.log('fd=',fd);#}
-        {#    $.ajax({#}
-        {#        url: '/upload/',#}
-        {#        type: "POST",#}
-        {#        data: fd,#}
-        {#        processData: false,  // 告诉jQuery不要去处理发送的数据#}
-        {#        contentType: false,   // 告诉jQuery不要去设置Content-Type请求头#}
-        {#        success: function(value) {#}
-        {#            //if(value.code == '1')#}
-        {#                alert('upload success!');#}
-        {#                console.log('value=',value);#}
-        {#                //setTimeout(function(){#}
-        {#                //    window.location = 'home.html';#}
-        {#                //},1000);#}
-        {#        }#}
-        {#    })#}
-        {#})#}
+        $('#btn_upload').click(function() {
+            var fd = new FormData();
+            var photo = $("#file_pic")[0].files[0];
+            fd.append('photo', photo);
+            console.log('fd=', fd);
+            $.ajax({
+                url: '/upload/',
+                type: "POST",
+                data: fd,
+                processData: false,  // 告诉jQuery不要去处理发送的数据
+                contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                success: function (data) {
+                    if (data.status == 'success') {
+                        alert(data.data)
+                    }else if (data.status == 'fail') {
+                        alert("fail")
+                    }
+                }
+            })
+        })
 
         $("#file_pic").change(function(){
             readURL(this);
         });
-        function readURL(input) {
+        function readURL(input){
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 
