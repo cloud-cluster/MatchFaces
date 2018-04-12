@@ -1,6 +1,5 @@
 # coding:utf-8
 import cv2
-import matplotlib.pyplot as plt
 import cut_human as human
 
 x = range(30)
@@ -65,16 +64,6 @@ def calculate_similarity(human_path, cut_human_path):
         result_value = get_avg(diff_human, diff_cat)
         print('similarity', get_ss(result_value))
 
-        # print similarity graph
-        # plt.figure("avg")
-        # plt.plot(x, diff_human, marker="*", label="$walk01$")
-        # plt.plot(x, diff_cat, marker="*", label="$walk03$")
-        # plt.title("avg")
-        # plt.legend()
-        # plt.show()
-        #
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
         return 1
 
 
