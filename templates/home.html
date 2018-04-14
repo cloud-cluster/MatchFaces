@@ -81,13 +81,14 @@
             width: 100%;
             }
         .comeon_note {
+            opacity: 1;
             z-index: 5;
             position: relative;
             width: 35rem;
             height: 26rem;
             border-radius: 3rem;
             border: 2px solid #726F6F;
-            background-color: #9e9e9e8c;
+            background-color: #E7DFDD;
             margin: 0 auto;
             margin-top: 1rem;
             -webkit-box-sizing: border-box;
@@ -97,7 +98,7 @@
             overflow: hidden;
         }
         .comeon_text{
-            color: #fff;
+            /*color: #fff;*/
         }
         .comeon_note_submit{
             width: 10rem;
@@ -130,6 +131,19 @@
             line-height:50px;   
             overflow:hidden; 
         }
+        .loading{
+            /*border: 1px solid;*/
+            opacity: 1;
+            width: 394px;
+            position: absolute;
+            top: 91px;
+            margin: 0 auto;
+            left: 35%;
+            z-index: 99;
+            border-radius: 40px;
+            overflow: hidden;
+            display: none;
+        }
     </style>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 </head>
@@ -161,8 +175,8 @@
             <div class="comeon_note_submit" id="btn_upload">match!</div>
         </div>
     </form>
-    <div id="loading">
-        <img src="image/cat.gif" alt="loading">
+    <div id="loading" class="loading">
+        <img src="http://202.45.128.135:10062/MatchFaces/image/cat.gif" alt="loading">
     </div>
 </span></p></div>
 <script>
@@ -194,24 +208,38 @@
         $('#btn_upload').click(function() {
             var fd = new FormData();
             var photo = $("#file_pic")[0].files[0];
-            fd.append('photo', photo);
-            console.log('fd=', fd);
-            $.ajax({
-                url: '/upload/',
-                type: "POST",
-                data: fd,
-                processData: false,  // 告诉jQuery不要去处理发送的数据
-                contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
-                success: function (data) {
-                    console.dir('data=',data)
-                    if (data.status == 'success') {
-                        //alert(data.data)
-                        $('#blah2').attr('src', e.target.result);                        
-                    }else if (data.status == 'fail') {
-                        //alert("fail")
+            console.log('photo=',photo)
+            if (photo != '' && photo != undefined) {
+                $('#loading').show();
+                fd.append('photo', photo);
+                console.log('fd=', fd);
+                $.ajax({
+                    url: '/upload/',
+                    type: "POST",
+                    data: fd,
+                    processData: false,  // 告诉jQuery不要去处理发送的数据
+                    contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                    success: function (data) {
+                        console.dir('data=',data)
+                        if (data.status == 'success') {
+                            $('#loading').hide();
+                            //alert(data.data)
+                            console.dir(data);
+                            $('#blah2').attr('src', 'http://202.45.128.135:10062/MatchFaces/'+data.data);
+                            $('#blah2').one("load", function() {
+                              // do stuff
+                            }).each(function() {
+                              if(this.complete) $(this).load();
+                            });                        
+                        }else if (data.status == 'fail') {
+                            //alert("fail")
+                        }
                     }
-                }
-            })
+                })
+            }else{
+                alert('Please choose an image honey ~')
+            }
+            
         })
 
         $("#file_pic").change(function(){
