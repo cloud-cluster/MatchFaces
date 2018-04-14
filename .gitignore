@@ -54,5 +54,12 @@ freeline.py
 freeline/
 freeline_project_description.json
 
+.idea
+
 *.pyc
 .DS_Store
+
+dist/*.jpg
+dist/*.png
+upload/*.jpg
+upload/*.png

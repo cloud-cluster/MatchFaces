@@ -231,8 +231,10 @@
                             }).each(function() {
                               if(this.complete) $(this).load();
                             });                        
-                        }else if (data.status == 'fail') {
-                            //alert("fail")
+                        }else {
+                            alert('You are so handsome that no cat could match you! Maybe change another photo?')
+                            console.log('fail');
+                            $('#blah').attr('src', '#');
                         }
                     }
                 })
